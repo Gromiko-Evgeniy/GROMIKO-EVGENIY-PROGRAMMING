@@ -1,5 +1,4 @@
 #include <stdio.h> 
-#include <conio.h>
 #include "Lab1_C_header.h"
 
 
@@ -13,7 +12,7 @@ int main()
     {
         printf("Do you wanna change your four-digit number? (y or n) \n");
 
-       unswer = _getch();
+        scanf("%c", unswer); 
         if (unswer == 'y')
         {
             printf("Enter  your four-digit number \n");
@@ -51,7 +50,6 @@ int main()
             printf("Wrong imput, try again \n");
         }
     }
-    _getch();
 }
 
 int Digit4(int _num)

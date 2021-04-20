@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <conio.h>
 #include "Lab2_C_header.h"
 
 struct Tariff
@@ -25,7 +24,7 @@ int main()
 	while (unswer != 'n')
 	{
 		printf("Do you wanna choose tariff? (y/n) \n");
-		unswer = _getch();
+		scanf("%c", unswer);
 		if (unswer == 'y')
 		{
 			printf("Tariff info: \n");
@@ -203,7 +202,6 @@ int main()
 		printf("wrong input, try again \n \n");
 		}
 	}
-	_getch();
 }
 
 

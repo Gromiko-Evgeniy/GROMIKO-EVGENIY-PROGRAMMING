@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <math.h>
 #include "Lab2.2_C_header.h"
-#include "conio.h"
 
 
 int main (void)
@@ -15,7 +14,6 @@ int main (void)
     value = 0;
     n = 0;
     Recursion(x, e, n, value);
-      _getch();
     return 0;
 }
 
@@ -37,7 +35,6 @@ float EnterX()
         printf("Error input. Try again\n");
         fflush(stdin);
     }
-      _getch();
     return x;
 }
 
@@ -49,7 +46,6 @@ int Iteration(int x, float e, int n, float value)
          value += pow(-1, n-1) * pow(x, 2*n-1)/Fact(2*n - 1);
      }
      printf("Result sin x: %f\tResult: %f\tStep: %d\n", sin(x), value, n);
-       _getch();
      return n;
 }
 
@@ -63,7 +59,6 @@ int Recursion(int x, float e, int n, float value)
      } else
      {
          printf("Result sin x: %f\tResult: %f\tStep: %d\n", sin(x), value, n);
-           _getch();
          return n;
      }
 }

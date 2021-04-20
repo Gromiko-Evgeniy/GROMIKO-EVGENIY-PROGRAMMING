@@ -1,7 +1,6 @@
 #include "Lab2_C_header.h"
 #include <assert.h>
 #include <stdio.h>
-#include <conio.h>
 
 int Test()
 {
@@ -18,6 +17,5 @@ int main()
     Test();
     printf("program have tested");
 
-    _getch();
     return 0;
 }

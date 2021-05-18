@@ -64,7 +64,7 @@ int main()
             {
                /* scanf("%d", &matrix[i][j]);  printf(" \t"); */
                 /*matrix[j][i] = getche();*/
-		scanf ("%d",matrix[j][i]);    
+		scanf ("%d", &matrix[j][i]);    
                 printf("\t");
             }
             printf(" \n");

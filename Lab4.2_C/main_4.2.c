@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <conio.h>
 #include "Lab4.2_C_header.h"
 
 int main(void)
@@ -22,7 +21,6 @@ int main(void)
      /*---------------------------------------*/
 
      fclose(labFile);
-     _getch();
 }
 
 int LineLength(char _text[])

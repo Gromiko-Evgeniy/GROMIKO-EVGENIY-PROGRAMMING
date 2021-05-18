@@ -12,7 +12,7 @@ int main()
     {
         printf("Do you wanna change your four-digit number? (y or n) \n");
 
-        scanf("%c", unswer); 
+        scanf("%c", &unswer); 
         if (unswer == 'y')
         {
             printf("Enter  your four-digit number \n");

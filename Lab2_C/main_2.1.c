@@ -24,7 +24,7 @@ int main()
 	while (unswer != 'n')
 	{
 		printf("Do you wanna choose tariff? (y/n) \n");
-		scanf("%c", unswer);
+		scanf("%c", &unswer);
 		if (unswer == 'y')
 		{
 			printf("Tariff info: \n");

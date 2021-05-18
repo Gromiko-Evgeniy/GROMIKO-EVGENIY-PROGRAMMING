@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <conio.h>
 #include "Lab4.1_C_header.h"
 
 int main()
@@ -18,7 +17,7 @@ int main()
     {printf("all is necessory\n");}
     
     /*---------------------------------------*/
-    _getch();
+    return 0;
 }    
 
 int LineLength(char _text[])

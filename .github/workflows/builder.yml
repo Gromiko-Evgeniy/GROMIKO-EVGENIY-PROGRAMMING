@@ -19,6 +19,15 @@ jobs:
           cd ../Lab2_C  
           make test 
           ./test
+          cd ../Lab3_C
+          make test
+          ./test
+          cd ../Lab4.1_C
+          make test
+          ./test
+          cd ../Lab4.2_C
+          make test
+          ./test
           cd ../Lab2.2_C 
           make test 
           ./test

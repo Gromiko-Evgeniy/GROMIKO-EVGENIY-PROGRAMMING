@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <conio.h>
 #include <stdlib.h>
-#include <conio.h>
 #include "Lab3_C_header.h"
 
 int main()
@@ -65,7 +64,8 @@ int main()
             for (i = 0; i < columns; i++)
             {
                /* scanf("%d", &matrix[i][j]);  printf(" \t"); */
-                matrix[j][i] = getche();
+                /*matrix[j][i] = getche();*/
+		scanf ("%d",matrix[j][i]);    
                 printf("\t");
             }
             printf(" \n");
@@ -94,7 +94,6 @@ int main()
         /*free();*/
         break;
 	}
-    _getch();
     return 0;
 } 
 

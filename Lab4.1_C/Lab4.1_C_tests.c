@@ -1,7 +1,6 @@
 #include "Lab4.1_C_header.h"
 #include <assert.h>
 #include <stdio.h>
-#include <conio.h>
 #include <stdlib.h>
 
 int Tests()
@@ -17,7 +16,6 @@ int main()
 {
     Tests();
     printf("program has tasted");
-    _getch();
 
     return 0;
 }

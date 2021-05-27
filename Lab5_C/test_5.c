@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <conio.h>
 #include "func_5.h"
 
 int Test()

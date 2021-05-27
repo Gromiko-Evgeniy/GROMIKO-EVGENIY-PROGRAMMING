@@ -36,7 +36,5 @@ int main()
 
     printf("\nTest passed successfully");
 
-    _getch();
-
     return 0;
 }

@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
 #include "func_5.h"
 
 
@@ -20,7 +19,6 @@ int main(void)
     while(ExtractItemFromStack(&StackWithLists) != 0)
     {}
 
-    _getch();
     return 0;
 }
 

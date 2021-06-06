@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <conio.h>
+
 #include "func_6.h" 
 
 
@@ -30,6 +30,5 @@ int main(void)
 
     printf("Test passed successfully");
 
-    _getch();
     return 0;
 } 

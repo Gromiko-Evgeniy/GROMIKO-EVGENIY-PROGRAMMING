@@ -3,7 +3,7 @@ name: Builder
 on:
   push:
     paths: 
-     'Lab7_C/**'
+     'Lab5_C/**'
 
 jobs:
   build:

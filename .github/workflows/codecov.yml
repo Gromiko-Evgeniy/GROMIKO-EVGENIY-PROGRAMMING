@@ -1,19 +1,17 @@
 name: Codecov
-
-on:
-  push:
-    paths:
-    - 'Lab7_C/**'
+on: [push, pull_request]
 jobs:
   run:
     runs-on: ubuntu-latest
     steps:
       - name: Fetch
         uses: actions/checkout@master
-      - name: Testing
+      - name: Test
         run: |
+          cd Lab7_C/
           make test
-          ./test
-      - name: Codecov
-        run: cd lab7 && export CODECOV_TOKEN="a7addfd9-864e-452d-be28-dff3fda75095" && bash <(curl -s https://codecov.io/bash)
- 
+      - name: Upload
+        uses: codecov/codecov-action@v1
+        with:
+          files: | 
+           ./Lab7_C/catalog.c.gcov

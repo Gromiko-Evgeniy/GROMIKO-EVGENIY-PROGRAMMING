@@ -1,5 +1,9 @@
 name: Codecov
-on: [push, pull_request]
+
+on:
+  push:
+    paths:
+    - 'Lab7_C/**'
 jobs:
   run:
     runs-on: ubuntu-latest
@@ -10,8 +14,6 @@ jobs:
         run: |
           gcc -ftest-coverage -fprofile-arcs -O0 -o test test.c lib.c
           ./test
-          gcov -abcfu lib.c
-      - name: Upload
-        uses: codecov/codecov-action@v1
-        with:
-          files: ./lib.c.gcov
+      - name: Codecov
+        run: cd lab7 && export CODECOV_TOKEN="a7addfd9-864e-452d-be28-dff3fda75095" && bash <(curl -s https://codecov.io/bash)
+ 

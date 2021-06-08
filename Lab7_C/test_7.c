@@ -60,6 +60,5 @@ int main(void)
 
     printf("\nTest passed successfully");
 
-    _getch();
     return 0;
 }

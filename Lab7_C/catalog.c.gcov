@@ -1,0 +1,876 @@
+        -:    0:Source:catalog.c
+        -:    0:Programs:2
+        -:    1:#include "catalog.h"
+        -:    2:
+        -:    3:
+function NumberOfLinesInFile called 2 returned 100% blocks executed 100%
+        2:    4:int NumberOfLinesInFile(FILE *fl)
+        2:    4-block  0
+        -:    5:{
+        -:    6:    char buffer[20];
+        2:    7:    int number = 0;
+        -:    8:
+       86:    9:    while(fgets(buffer, 20, fl) != NULL)
+        2:    9-block  0
+unconditional  0 taken 2
+       86:    9-block  1
+call    1 returned 86
+branch  2 taken 84
+branch  3 taken 2 (fallthrough)
+        -:   10:    {
+       84:   11:        number++;
+       84:   11-block  0
+unconditional  0 taken 84
+        -:   12:    }
+        -:   13:
+        2:   14:    rewind(fl);
+        2:   14-block  0
+call    0 returned 2
+        2:   15:    return number;
+unconditional  0 taken 2
+        -:   16:}
+        -:   17:
+function StrToInt called 12 returned 100% blocks executed 100%
+       12:   18:int StrToInt(char* str)
+       12:   18-block  0
+        -:   19:{
+       12:   20:    int lenght = 0, number = 0, k;
+        -:   21:
+       31:   22:    while(str[lenght] != '\n')
+       12:   22-block  0
+unconditional  0 taken 12
+       31:   22-block  1
+branch  1 taken 19
+branch  2 taken 12 (fallthrough)
+        -:   23:    {
+       19:   24:        lenght++;
+       19:   24-block  0
+unconditional  0 taken 19
+        -:   25:    }
+        -:   26:
+       31:   27:    for (lenght = lenght-1, k = 0; lenght >= 0; lenght--, k++)
+       12:   27-block  0
+unconditional  0 taken 12
+       19:   27-block  1
+unconditional  1 taken 19
+       31:   27-block  2
+branch  2 taken 19
+branch  3 taken 12 (fallthrough)
+        -:   28:    {
+       19:   29:        number += (str[lenght] - '0') * pow(10,k);
+        -:   30:    }
+        -:   31:
+       12:   32:    return number;
+       12:   32-block  0
+unconditional  0 taken 12
+        -:   33:}
+        -:   34: 
+        -:   35:
+function FillCatalog called 1 returned 100% blocks executed 91%
+        1:   36:int FillCatalog(struct Catalog* CatalogOfShop)
+        1:   36-block  0
+        -:   37:{
+        -:   38:    FILE* database;
+        1:   39:    int numberOfProducts, i = 0;
+        -:   40:    char sectionFromFile[15];
+        -:   41:    char nameFromFile[20];
+        -:   42:    unsigned int priceFromFile;
+        -:   43:    char presenceFromFile;
+        -:   44:    char descriptionFromFile[20];
+        -:   45:    unsigned int guaranteeFromFile;
+        -:   46:    char countryFromFile[15];
+        -:   47:    char temp[5];
+        -:   48:    char* ch;
+        -:   49:
+        -:   50:
+        1:   51:    database = fopen("database.txt", "r");
+        1:   51-block  0
+call    0 returned 1
+        1:   52:    if(database == NULL)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -:   53:    {
+    #####:   54:        printf("file not found");
+    $$$$$:   54-block  0
+call    0 never executed
+    #####:   55:        return -1;
+unconditional  0 never executed
+        -:   56:    }
+        -:   57:
+        1:   58:    numberOfProducts = NumberOfLinesInFile(database)/7;
+        1:   58-block  0
+call    0 returned 1
+        -:   59:    
+        7:   60:    while(i < numberOfProducts)
+unconditional  0 taken 1
+        7:   60-block  0
+branch  1 taken 6
+branch  2 taken 1 (fallthrough)
+        -:   61:    {   
+        6:   62:        fgets(sectionFromFile, 20, database);
+        6:   62-block  0
+call    0 returned 6
+        6:   63:        fgets(nameFromFile, 20, database);
+call    0 returned 6
+        6:   64:        fgets(temp, 5, database);
+call    0 returned 6
+        6:   65:        priceFromFile = StrToInt(temp);
+call    0 returned 6
+        6:   66:        fgets(temp, 5, database);
+call    0 returned 6
+        6:   67:        presenceFromFile = temp[0];
+        6:   68:        fgets(descriptionFromFile, 20, database);
+call    0 returned 6
+        6:   69:        fgets(temp, 5, database);
+call    0 returned 6
+        6:   70:        guaranteeFromFile = StrToInt(temp);
+call    0 returned 6
+        6:   71:        fgets(countryFromFile, 15, database);
+call    0 returned 6
+        6:   72:        AddProduct(CatalogOfShop, sectionFromFile, nameFromFile, priceFromFile, presenceFromFile, 
+call    0 returned 6
+        -:   73:                   descriptionFromFile, guaranteeFromFile, countryFromFile);
+        6:   74:        i++;
+unconditional  0 taken 6
+        -:   75:    }
+        -:   76:
+        1:   77:    fclose(database);
+        1:   77-block  0
+call    0 returned 1
+        -:   78:
+        1:   79:    return CatalogOfShop->amount;
+unconditional  0 taken 1
+        1:   79-block  0
+unconditional  1 taken 1
+        -:   80:}
+        -:   81:
+function AddProduct called 8 returned 100% blocks executed 97%
+        8:   82:int AddProduct(struct Catalog* CatalogOfShop, char* section, char* name, unsigned int price, char presence, char* description, 
+        8:   82-block  0
+        -:   83:               unsigned int guarantee, char* country)
+        -:   84:{
+        8:   85:    int i = 0;
+        8:   86:    struct Product* newProduct = (struct Product*)malloc(sizeof(struct Product));
+        8:   87:    if(!newProduct)
+        8:   87-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 8
+        -:   88:    {
+    #####:   89:        return -1;
+    $$$$$:   89-block  0
+unconditional  0 never executed
+        -:   90:    }
+        -:   91:
+        8:   92:    newProduct->number = CatalogOfShop->amount;
+        -:   93:
+       70:   94:    while(section[i])
+        8:   94-block  0
+unconditional  0 taken 8
+       70:   94-block  1
+branch  1 taken 62
+branch  2 taken 8 (fallthrough)
+        -:   95:    {
+       62:   96:        newProduct->section[i] = section[i];
+       62:   97:        i++;
+       62:   97-block  0
+unconditional  0 taken 62
+        -:   98:    }
+        8:   99:    if(section[i-1] == '\n')
+        8:   99-block  0
+branch  0 taken 6 (fallthrough)
+branch  1 taken 2
+        -:  100:    {
+        6:  101:        newProduct->section[i-1] = '\0';
+        6:  101-block  0
+unconditional  0 taken 6
+        -:  102:    } else
+        -:  103:    {
+        2:  104:        newProduct->section[i] = '\0';
+        2:  104-block  0
+unconditional  0 taken 2
+        -:  105:    }
+        8:  106:    i = 0;
+        -:  107:
+       53:  108:    while(name[i])
+        8:  108-block  0
+unconditional  0 taken 8
+       53:  108-block  1
+branch  1 taken 45
+branch  2 taken 8 (fallthrough)
+        -:  109:    {
+       45:  110:        newProduct->name[i] = name[i];
+       45:  111:        i++;
+       45:  111-block  0
+unconditional  0 taken 45
+        -:  112:    }
+        8:  113:    if(name[i-1] == '\n')
+        8:  113-block  0
+branch  0 taken 6 (fallthrough)
+branch  1 taken 2
+        -:  114:    {
+        6:  115:        newProduct->name[i-1] = '\0';
+        6:  115-block  0
+unconditional  0 taken 6
+        -:  116:    } else
+        -:  117:    {
+        2:  118:        newProduct->name[i] = '\0';
+        2:  118-block  0
+unconditional  0 taken 2
+        -:  119:    }
+        8:  120:    i = 0;
+        -:  121:
+        8:  122:    newProduct->price = price;
+        -:  123:
+        8:  124:    newProduct->presence = presence;
+        -:  125:
+       81:  126:    while(description[i])
+        8:  126-block  0
+unconditional  0 taken 8
+       81:  126-block  1
+branch  1 taken 73
+branch  2 taken 8 (fallthrough)
+        -:  127:    {
+       73:  128:        newProduct->description[i] = description[i];
+       73:  129:        i++;
+       73:  129-block  0
+unconditional  0 taken 73
+        -:  130:    }
+        8:  131:    if(description[i-1] == '\n')
+        8:  131-block  0
+branch  0 taken 6 (fallthrough)
+branch  1 taken 2
+        -:  132:    {
+        6:  133:        newProduct->description[i-1] = '\0';
+        6:  133-block  0
+unconditional  0 taken 6
+        -:  134:    } else
+        -:  135:    {
+        2:  136:        newProduct->description[i] = '\0';
+        2:  136-block  0
+unconditional  0 taken 2
+        -:  137:    }
+        8:  138:    i = 0;
+        -:  139:
+        8:  140:    newProduct->guarantee = guarantee;
+        -:  141:
+       62:  142:    while(country[i])
+        8:  142-block  0
+unconditional  0 taken 8
+       62:  142-block  1
+branch  1 taken 54
+branch  2 taken 8 (fallthrough)
+        -:  143:    {
+       54:  144:        newProduct->country[i] = country[i];
+       54:  145:        i++;
+       54:  145-block  0
+unconditional  0 taken 54
+        -:  146:    }
+        8:  147:    if(country[i-1] == '\n')
+        8:  147-block  0
+branch  0 taken 5 (fallthrough)
+branch  1 taken 3
+        -:  148:    {
+        5:  149:        newProduct->country[i-1] = '\0';
+        5:  149-block  0
+unconditional  0 taken 5
+        -:  150:    } else
+        -:  151:    {
+        3:  152:        newProduct->country[i] = '\0';
+        3:  152-block  0
+unconditional  0 taken 3
+        -:  153:    }
+        -:  154:
+        8:  155:    if(!(CatalogOfShop->head))
+        8:  155-block  0
+branch  0 taken 2 (fallthrough)
+branch  1 taken 6
+        -:  156:    {
+        2:  157:        CatalogOfShop->head = newProduct;
+        2:  158:        (CatalogOfShop->head)->next = NULL;
+        2:  159:        (CatalogOfShop->head)->prev = NULL;
+        2:  160:        CatalogOfShop->tail = CatalogOfShop->head;
+        2:  160-block  0
+unconditional  0 taken 2
+        -:  161:    } else
+        -:  162:    {
+        -:  163:        struct Product* tempTail;
+        -:  164:
+        6:  165:        tempTail = CatalogOfShop->tail;
+        6:  166:        tempTail->next = newProduct;
+        6:  167:        CatalogOfShop->tail = newProduct;
+        6:  168:        (CatalogOfShop->tail)->prev = tempTail;
+        6:  169:        (CatalogOfShop->tail)->next = NULL;
+        6:  169-block  0
+unconditional  0 taken 6
+        -:  170:    }
+        -:  171:
+        8:  172:    (CatalogOfShop->amount)++;
+        -:  173:
+        8:  174:    return (CatalogOfShop->amount);
+        8:  174-block  0
+unconditional  0 taken 8
+        -:  175:}
+        -:  176:
+function OutputProduct called 11 returned 100% blocks executed 100%
+       11:  177:void OutputProduct(struct Product* Product)
+       11:  177-block  0
+        -:  178:{
+       11:  179:    printf("Name: %s\n", Product->name);
+       11:  179-block  0
+call    0 returned 11
+       11:  180:    printf("Price: %d $\n", Product->price);
+call    0 returned 11
+       11:  181:    printf("Description: %s\n", Product->description);
+call    0 returned 11
+       11:  182:    printf("Guarantee: %d mounth\n", Product->guarantee);
+call    0 returned 11
+       11:  183:    printf("Manufacturer: %s\n", Product->country);
+call    0 returned 11
+       11:  184:    if(Product->presence == 'n')
+branch  0 taken 3 (fallthrough)
+branch  1 taken 8
+        -:  185:    {
+        3:  186:        printf("                       Not in stock");
+        3:  186-block  0
+call    0 returned 3
+unconditional  1 taken 3
+        -:  187:    }
+       11:  188:}
+        -:  189:
+function OutputProducts called 2 returned 100% blocks executed 100%
+        2:  190:int OutputProducts(struct Catalog* CatalogOfShop, char section)
+        2:  190-block  0
+        -:  191:{
+        2:  192:    struct Product* temp = CatalogOfShop->head;
+        2:  193:    int count = 0;
+        -:  194:
+       16:  195:    while(temp)
+        2:  195-block  0
+unconditional  0 taken 2
+       16:  195-block  1
+branch  1 taken 14
+branch  2 taken 2 (fallthrough)
+        -:  196:    {
+       14:  197:        if(temp->section[0] == section)
+       14:  197-block  0
+branch  0 taken 8 (fallthrough)
+branch  1 taken 6
+        -:  198:        {
+        8:  199:            OutputProduct(temp);
+        8:  199-block  0
+call    0 returned 8
+        -:  200:
+        8:  201:            count++;
+        -:  202:
+        8:  203:            printf("\n\n");
+call    0 returned 8
+unconditional  1 taken 8
+        -:  204:        }
+        -:  205:
+       14:  206:        temp = temp->next;
+       14:  206-block  0
+unconditional  0 taken 14
+        -:  207:    }
+        -:  208:
+        2:  209:    return count;
+        2:  209-block  0
+unconditional  0 taken 2
+        -:  210:}
+        -:  211:
+function AllProductsOutput called 0 returned 0% blocks executed 0%
+    #####:  212:void AllProductsOutput(struct Catalog* CatalogOfShop)
+    $$$$$:  212-block  0
+        -:  213:{
+    #####:  214:    struct Product* temp = CatalogOfShop->head;
+        -:  215:
+    #####:  216:    while(temp)
+    $$$$$:  216-block  0
+unconditional  0 never executed
+    $$$$$:  216-block  1
+branch  1 never executed
+branch  2 never executed
+        -:  217:    {
+    #####:  218:        OutputProduct(temp);
+    $$$$$:  218-block  0
+call    0 never executed
+        -:  219:
+    #####:  220:        printf("\n\n");
+call    0 never executed
+        -:  221:
+    #####:  222:        temp = temp->next;
+unconditional  0 never executed
+        -:  223:    }
+    #####:  224:}
+        -:  225:
+function SearchName called 0 returned 0% blocks executed 0%
+    #####:  226:int SearchName(struct Catalog* CatalogOfShop, char* name)
+    $$$$$:  226-block  0
+        -:  227:{
+    #####:  228:    struct Product* temp = CatalogOfShop->head;
+    #####:  229:    int find = 0;
+        -:  230:
+    #####:  231:    while(temp)
+    $$$$$:  231-block  0
+unconditional  0 never executed
+    $$$$$:  231-block  1
+branch  1 never executed
+branch  2 never executed
+        -:  232:    {
+    #####:  233:        if(temp->name[0] == name[0] && temp->name[1] == name[1] && temp->name[2] == name[2])
+    $$$$$:  233-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  233-block  1
+branch  2 never executed
+branch  3 never executed
+    $$$$$:  233-block  2
+branch  4 never executed
+branch  5 never executed
+        -:  234:        {
+    #####:  235:            OutputProduct(temp);
+    $$$$$:  235-block  0
+call    0 never executed
+        -:  236:
+    #####:  237:            printf("\n\n");
+call    0 never executed
+        -:  238:
+    #####:  239:            find++;
+unconditional  0 never executed
+        -:  240:        }
+    #####:  241:        temp = temp->next;
+    $$$$$:  241-block  0
+unconditional  0 never executed
+        -:  242:    }
+        -:  243:
+    #####:  244:    if(find == 0)
+    $$$$$:  244-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  245:    {
+    #####:  246:        printf("                                     Nothing found\n");
+    $$$$$:  246-block  0
+call    0 never executed
+unconditional  1 never executed
+        -:  247:    }
+        -:  248:
+    #####:  249:    return find;
+    $$$$$:  249-block  0
+unconditional  0 never executed
+        -:  250:}
+        -:  251:
+function SearchDescription called 2 returned 100% blocks executed 100%
+        2:  252:int SearchDescription(struct Catalog* CatalogOfShop, char* description)
+        2:  252-block  0
+        -:  253:{
+        2:  254:    struct Product* temp = CatalogOfShop->head;
+        2:  255:    int find = 0;
+        -:  256:
+       16:  257:    while(temp)
+        2:  257-block  0
+unconditional  0 taken 2
+       16:  257-block  1
+branch  1 taken 14
+branch  2 taken 2 (fallthrough)
+        -:  258:    {
+       14:  259:        if(temp->description[0] == description[0] && temp->description[1] == description[1] && temp->description[2] == description[2])
+       14:  259-block  0
+branch  0 taken 3 (fallthrough)
+branch  1 taken 11
+        3:  259-block  1
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0
+        3:  259-block  2
+branch  4 taken 3 (fallthrough)
+branch  5 taken 0
+        -:  260:        {
+        3:  261:            OutputProduct(temp);
+        3:  261-block  0
+call    0 returned 3
+        -:  262:
+        3:  263:            printf("\n\n");
+call    0 returned 3
+        3:  264:            find++;
+unconditional  0 taken 3
+        -:  265:        }
+        -:  266:
+       14:  267:        temp = temp->next;
+       14:  267-block  0
+unconditional  0 taken 14
+        -:  268:    }
+        -:  269:
+        2:  270:    if(find == 0)
+        2:  270-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 1
+        -:  271:    {
+        1:  272:        printf("                                     Nothing found\n");
+        1:  272-block  0
+call    0 returned 1
+unconditional  1 taken 1
+        -:  273:    }
+        -:  274:
+        2:  275:    return find;
+        2:  275-block  0
+unconditional  0 taken 2
+        -:  276:}
+        -:  277:
+function AddToGarbage called 1 returned 100% blocks executed 94%
+        1:  278:int AddToGarbage(struct Garbage* UserGarbage, struct Product* Product)
+        1:  278-block  0
+        -:  279:{
+        1:  280:    struct Product* newProduct = (struct Product*)malloc(sizeof(struct Product));
+        1:  281:    int i = 0;
+        -:  282:
+        1:  283:    newProduct->number = Product->number;
+        -:  284:
+       11:  285:    while(Product->section[i])
+        1:  285-block  0
+unconditional  0 taken 1
+       11:  285-block  1
+branch  1 taken 10
+branch  2 taken 1 (fallthrough)
+        -:  286:    {
+       10:  287:        newProduct->section[i] = Product->section[i];
+       10:  288:        i++;
+       10:  288-block  0
+unconditional  0 taken 10
+        -:  289:    }
+        1:  290:    newProduct->section[i] = '\0';
+        1:  291:    i = 0;
+        -:  292:
+        5:  293:    while(Product->name[i])
+        1:  293-block  0
+unconditional  0 taken 1
+        5:  293-block  1
+branch  1 taken 4
+branch  2 taken 1 (fallthrough)
+        -:  294:    {
+        4:  295:        newProduct->name[i] = Product->name[i];
+        4:  296:        i++;
+        4:  296-block  0
+unconditional  0 taken 4
+        -:  297:    }
+        1:  298:    newProduct->name[i] = '\0';
+        1:  299:    i = 0;
+        -:  300:
+        1:  301:    newProduct->price = Product->price;
+        -:  302:
+        1:  303:    newProduct->presence = Product->presence;
+        -:  304:
+       10:  305:    while(Product->description[i])
+        1:  305-block  0
+unconditional  0 taken 1
+       10:  305-block  1
+branch  1 taken 9
+branch  2 taken 1 (fallthrough)
+        -:  306:    {
+        9:  307:        newProduct->description[i] = Product->description[i];
+        9:  308:        i++;
+        9:  308-block  0
+unconditional  0 taken 9
+        -:  309:    }
+        1:  310:    newProduct->description[i] = '\0';
+        1:  311:    i = 0;
+        -:  312:
+        1:  313:    newProduct->guarantee = Product->guarantee;
+        -:  314:
+        8:  315:    while(Product->country[i])
+        1:  315-block  0
+unconditional  0 taken 1
+        8:  315-block  1
+branch  1 taken 7
+branch  2 taken 1 (fallthrough)
+        -:  316:    {
+        7:  317:        newProduct->country[i] = Product->country[i];
+        7:  318:        i++;
+        7:  318-block  0
+unconditional  0 taken 7
+        -:  319:    }
+        1:  320:    newProduct->country[i] = '\0';
+        -:  321:
+        1:  322:    if(!(UserGarbage->head))
+        1:  322-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        -:  323:    {
+        1:  324:        UserGarbage->head = newProduct;
+        1:  325:        (UserGarbage->head)->next = NULL;
+        1:  326:        (UserGarbage->head)->prev = NULL;
+        1:  327:        UserGarbage->tail = UserGarbage->head;
+        1:  327-block  0
+unconditional  0 taken 1
+        -:  328:    } else
+        -:  329:    {
+        -:  330:        struct Product* tempTail;
+        -:  331:
+    #####:  332:        tempTail = UserGarbage->tail;
+    #####:  333:        tempTail->next = newProduct;
+    #####:  334:        UserGarbage->tail = newProduct;
+    #####:  335:        (UserGarbage->tail)->prev = tempTail;
+    #####:  336:        (UserGarbage->tail)->next = NULL;
+    $$$$$:  336-block  0
+unconditional  0 never executed
+        -:  337:    }
+        -:  338:
+        1:  339:    (UserGarbage->amount)++;
+        1:  340:    UserGarbage->sum += newProduct->price;
+        -:  341:
+        1:  342:    return (UserGarbage->amount);
+        1:  342-block  0
+unconditional  0 taken 1
+        -:  343:}
+        -:  344:
+function DeleteCatalog called 2 returned 100% blocks executed 100%
+        2:  345:int DeleteCatalog(struct Catalog* CatalogOfShop)
+        2:  345-block  0
+        -:  346:{
+        -:  347:    struct Product* temp;
+        -:  348:
+       10:  349:    while(CatalogOfShop->head)
+        2:  349-block  0
+unconditional  0 taken 2
+       10:  349-block  1
+branch  1 taken 8
+branch  2 taken 2 (fallthrough)
+        -:  350:    {
+        8:  351:        temp = CatalogOfShop->head;
+        8:  352:        CatalogOfShop->head = (CatalogOfShop->head)->next;
+        -:  353:
+        8:  354:        free(temp);
+        8:  355:        (CatalogOfShop->amount)--;
+        8:  355-block  0
+unconditional  0 taken 8
+        -:  356:    }
+        -:  357:
+        2:  358:    return (CatalogOfShop->amount);
+        2:  358-block  0
+unconditional  0 taken 2
+        -:  359:}
+        -:  360:
+function DeleteGarbage called 1 returned 100% blocks executed 100%
+        1:  361:int DeleteGarbage(struct Garbage* MyGarbage)
+        1:  361-block  0
+        -:  362:{
+        -:  363:    struct Product* temp;
+        -:  364:
+        2:  365:    while(MyGarbage->head)
+        1:  365-block  0
+unconditional  0 taken 1
+        2:  365-block  1
+branch  1 taken 1
+branch  2 taken 1 (fallthrough)
+        -:  366:    {
+        1:  367:        temp = MyGarbage->head;
+        1:  368:        MyGarbage->head = (MyGarbage->head)->next;
+        -:  369:
+        1:  370:        MyGarbage->sum -= temp->price;
+        1:  371:        free(temp);
+        1:  372:        (MyGarbage->amount)--;
+        1:  372-block  0
+unconditional  0 taken 1
+        -:  373:    }
+        -:  374:
+        1:  375:    return (MyGarbage->amount);
+        1:  375-block  0
+unconditional  0 taken 1
+        -:  376:}
+        -:  377:
+function DeleteReport called 1 returned 100% blocks executed 100%
+        1:  378:int DeleteReport(struct List* Report)
+        1:  378-block  0
+        -:  379:{
+        -:  380:    struct Customer* temp;
+        -:  381:
+        2:  382:    while(Report->head)
+        1:  382-block  0
+unconditional  0 taken 1
+        2:  382-block  1
+branch  1 taken 1
+branch  2 taken 1 (fallthrough)
+        -:  383:    {
+        1:  384:        temp = Report->head;
+        1:  385:        Report->head = (Report->head)->next;
+        -:  386:
+        1:  387:        Report->amount -= temp->products->amount;
+        1:  388:        DeleteCatalog(temp->products);
+        1:  388-block  0
+call    0 returned 1
+        -:  389:
+        1:  390:        free(temp);
+unconditional  0 taken 1
+        -:  391:    }
+        -:  392:
+        1:  393:    return (Report->amount);
+        1:  393-block  0
+unconditional  0 taken 1
+        -:  394:}
+        -:  395:
+function AddCustomer called 1 returned 100% blocks executed 84%
+        1:  396:int AddCustomer(struct List* MyList, struct Garbage* cosmetics, char* name, char* surname)
+        1:  396-block  0
+        -:  397:{
+        1:  398:    int i = 0;
+        1:  399:    struct Product* temp = cosmetics->head;
+        -:  400:
+        1:  401:    struct Catalog* cat = (struct Catalog*)malloc(sizeof(struct Catalog));
+        1:  402:    if(!cat)
+        1:  402-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -:  403:    {
+    #####:  404:        return -1;
+    $$$$$:  404-block  0
+unconditional  0 never executed
+        -:  405:    }
+        -:  406:
+        1:  407:    struct Customer* newCustomer = (struct Customer*)malloc(sizeof(struct Customer));
+        1:  408:    if(!newCustomer)
+        1:  408-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -:  409:    {
+    #####:  410:        return -1;
+    $$$$$:  410-block  0
+unconditional  0 never executed
+        -:  411:    }
+        -:  412:
+        1:  413:    cat->head = NULL;
+        1:  414:    cat->tail = NULL;
+        1:  415:    cat->amount = 0;
+        -:  416:
+        2:  417:    while(temp)
+        1:  417-block  0
+unconditional  0 taken 1
+        2:  417-block  1
+branch  1 taken 1
+branch  2 taken 1 (fallthrough)
+        -:  418:    {
+        1:  419:        AddProduct(cat, temp->section, temp->name, temp->price, temp->presence, temp->description, temp->guarantee, temp->country);
+        1:  419-block  0
+call    0 returned 1
+        1:  420:        (MyList->amount)++;
+        1:  421:        MyList->sum += temp->price;
+        1:  422:        temp = temp->next;
+unconditional  0 taken 1
+        -:  423:    }
+        -:  424:
+        1:  425:    newCustomer->products = cat;
+        -:  426:
+        5:  427:    while(name[i])
+        1:  427-block  0
+unconditional  0 taken 1
+        5:  427-block  1
+branch  1 taken 4
+branch  2 taken 1 (fallthrough)
+        -:  428:    {
+        4:  429:        newCustomer->name[i] = name[i];
+        4:  430:        i++;
+        4:  430-block  0
+unconditional  0 taken 4
+        -:  431:    }
+        1:  432:    newCustomer->name[i] = '\0';
+        1:  433:    i = 0;
+        -:  434:
+        5:  435:    while(surname[i])
+        1:  435-block  0
+unconditional  0 taken 1
+        5:  435-block  1
+branch  1 taken 4
+branch  2 taken 1 (fallthrough)
+        -:  436:    {
+        4:  437:        newCustomer->surname[i] = surname[i];
+        4:  438:        i++;
+        4:  438-block  0
+unconditional  0 taken 4
+        -:  439:    }
+        1:  440:    newCustomer->surname[i] = '\0';
+        -:  441:
+        -:  442:
+        1:  443:    if(!(MyList->head))
+        1:  443-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        -:  444:    {
+        1:  445:        MyList->head = newCustomer;
+        1:  446:        (MyList->head)->next = NULL;
+        1:  447:        (MyList->head)->prev = NULL;
+        1:  448:        MyList->tail = MyList->head;
+        1:  448-block  0
+unconditional  0 taken 1
+        -:  449:    } else
+        -:  450:    {
+        -:  451:        struct Customer* tempTail;
+        -:  452:
+    #####:  453:        tempTail = MyList->tail;
+    #####:  454:        tempTail->next = newCustomer;
+    #####:  455:        MyList->tail = newCustomer;
+    #####:  456:        (MyList->tail)->prev = tempTail;
+    #####:  457:        (MyList->tail)->next = NULL;
+    $$$$$:  457-block  0
+unconditional  0 never executed
+        -:  458:    }
+        -:  459:
+        1:  460:    return (MyList->amount);
+        1:  460-block  0
+unconditional  0 taken 1
+        -:  461:}
+        -:  462:
+function OutputReport called 0 returned 0% blocks executed 0%
+    #####:  463:void OutputReport(struct List* MyList)
+    $$$$$:  463-block  0
+        -:  464:{
+        -:  465:    FILE* report;
+    #####:  466:    struct Customer* temp = MyList->head;
+        -:  467:
+    #####:  468:    report = fopen("report.txt", "w");
+    $$$$$:  468-block  0
+call    0 never executed
+    #####:  469:    if(report == NULL)
+branch  0 never executed
+branch  1 never executed
+        -:  470:    {
+    #####:  471:        printf("file not found");
+    $$$$$:  471-block  0
+call    0 never executed
+    #####:  472:        return;
+unconditional  0 never executed
+        -:  473:    }
+        -:  474:
+    #####:  475:    fprintf(report, "Revenue %d\n", MyList->sum);
+    $$$$$:  475-block  0
+call    0 never executed
+    #####:  476:    fprintf(report, "Number of items sold: %d\n", MyList->amount);
+call    0 never executed
+        -:  477:
+    #####:  478:    printf("SALED:\n\n");
+call    0 never executed
+        -:  479:
+    #####:  480:    while(temp)
+unconditional  0 never executed
+    $$$$$:  480-block  0
+branch  1 never executed
+branch  2 never executed
+        -:  481:    {
+    #####:  482:        fprintf(report, "%s %s\n", temp->name, temp->surname);
+    $$$$$:  482-block  0
+call    0 never executed
+    #####:  483:        printf("To whom: %s %s\n", temp->name, temp->surname);
+call    0 never executed
+    #####:  484:        AllProductsOutput(temp->products);
+call    0 never executed
+        -:  485:
+    #####:  486:        temp = temp->next;
+unconditional  0 never executed
+        -:  487:    }
+        -:  488:
+    #####:  489:    printf("Result:\n");
+    $$$$$:  489-block  0
+call    0 never executed
+    #####:  490:    printf("Number of items sold: %d\t Revenue: %d $\n", MyList->amount, MyList->sum);
+call    0 never executed
+        -:  491:
+    #####:  492:    fclose(report);
+call    0 never executed
+unconditional  1 never executed
+        -:  493:
+        -:  494:}

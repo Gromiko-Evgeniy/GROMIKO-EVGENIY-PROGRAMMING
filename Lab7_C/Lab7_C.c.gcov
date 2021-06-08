@@ -1,0 +1,585 @@
+        -:    0:Source:Lab7_C.c
+        -:    0:Programs:2
+        -:    1:#include "func_7.h"
+        -:    2:
+        -:    3:
+function _main called 0 returned 0% blocks executed 0%
+    #####:    4:int main(void)
+    $$$$$:    4-block  0
+        -:    5:{
+    #####:    6:    struct Catalog Shop = {NULL, NULL, 0};
+    #####:    7:    struct Garbage UserGarbage = {NULL, NULL, 0 , 0};
+    #####:    8:    struct List Customers = {NULL, NULL, 0, 0};
+        -:    9:
+        -:   10:
+    #####:   11:    FillCatalog(&Shop);
+    $$$$$:   11-block  0
+call    0 never executed
+        -:   12:
+    #####:   13:    UserInterface(&Shop, &UserGarbage, &Customers);
+call    0 never executed
+        -:   14:
+    #####:   15:    DeleteCatalog(&Shop);
+call    0 never executed
+    #####:   16:    DeleteReport(&Customers);
+call    0 never executed
+        -:   17:
+    #####:   18:    return 0;
+unconditional  0 never executed
+        -:   19:}
+        -:   20:
+function CheckYourChoise called 0 returned 0% blocks executed 0%
+    #####:   21:int CheckYourChoise(char* arr, char a, char b)
+    $$$$$:   21-block  0
+        -:   22:{
+    #####:   23:    int check = 0;
+        -:   24:
+    #####:   25:    scanf("%15s", arr);
+    $$$$$:   25-block  0
+call    0 never executed
+        -:   26:
+    #####:   27:    while(check == 0)
+unconditional  0 never executed
+    $$$$$:   27-block  0
+branch  1 never executed
+branch  2 never executed
+        -:   28:    {
+    #####:   29:        check = 1;
+    #####:   30:        if((arr[0] != a && arr[0] != b && arr[0] != 'b') || arr[1])
+    $$$$$:   30-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   30-block  1
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   30-block  2
+branch  4 never executed
+branch  5 never executed
+    $$$$$:   30-block  3
+branch  6 never executed
+branch  7 never executed
+        -:   31:        {
+    #####:   32:            if(arr[0] == 'r' && arr[1] == 'e' && arr[2] == 'p')
+    $$$$$:   32-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:   32-block  1
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   32-block  2
+branch  4 never executed
+branch  5 never executed
+        -:   33:            {
+    #####:   34:                break;
+    $$$$$:   34-block  0
+unconditional  0 never executed
+        -:   35:            }
+    #####:   36:            printf("Error input. Try again\n");
+    $$$$$:   36-block  0
+call    0 never executed
+    #####:   37:            check = 0;
+    #####:   38:            scanf("%15s", arr);
+call    0 never executed
+unconditional  1 never executed
+        -:   39:        }
+        -:   40:    }
+        -:   41:
+    #####:   42:    return check;
+    $$$$$:   42-block  0
+unconditional  0 never executed
+        -:   43:}
+        -:   44:
+function UserInterface called 0 returned 0% blocks executed 0%
+    #####:   45:void UserInterface(struct Catalog* Shop, struct Garbage* UserGarbage, struct List* Customers)
+    $$$$$:   45-block  0
+        -:   46:{
+        -:   47:    char choise[15];
+        -:   48:
+        -:   49:
+        -:   50:
+    #####:   51:    printf("                                                    WELCOME                       \n");
+    $$$$$:   51-block  0
+call    0 never executed
+        -:   52:
+    #####:   53:    printf("                                                                         Hint: If you want to go out press 'b'\n");
+call    0 never executed
+    #####:   54:    printf("Want to see a catalog or search for a specific product?\n\n");
+call    0 never executed
+        -:   55:
+    #####:   56:    printf("1.To see a catalog\n");
+call    0 never executed
+    #####:   57:    printf("2.To search for a specific product\n");
+call    0 never executed
+        -:   58:
+    #####:   59:    CheckYourChoise(choise, '1', '2');
+call    0 never executed
+    #####:   60:    if(choise[0] != 'b')
+branch  0 never executed
+branch  1 never executed
+        -:   61:    {
+    #####:   62:        system("cls");
+    $$$$$:   62-block  0
+call    0 never executed
+        -:   63:
+    #####:   64:        if(choise[0] == '1')
+branch  0 never executed
+branch  1 never executed
+        -:   65:        {
+    #####:   66:            SectionSelection(Shop, UserGarbage, Customers);
+    $$$$$:   66-block  0
+call    0 never executed
+unconditional  1 never executed
+    #####:   67:        } else if(choise[0] == '2')
+    $$$$$:   67-block  0
+branch  0 never executed
+branch  1 never executed
+        -:   68:        {
+    #####:   69:            Search(Shop, UserGarbage, Customers);
+    $$$$$:   69-block  0
+call    0 never executed
+unconditional  1 never executed
+        -:   70:        } else
+        -:   71:        {
+    #####:   72:            return ToSeeReport(Shop, UserGarbage, Customers);
+    $$$$$:   72-block  0
+call    0 never executed
+unconditional  1 never executed
+        -:   73:        }
+        -:   74:        
+    #####:   75:        InGarbage(Shop, UserGarbage, Customers);
+    $$$$$:   75-block  0
+call    0 never executed
+unconditional  1 never executed
+        -:   76:    }
+        -:   77:
+    #####:   78:    system("cls");
+    $$$$$:   78-block  0
+call    0 never executed
+unconditional  1 never executed
+        -:   79:}
+        -:   80:
+function SectionSelection called 0 returned 0% blocks executed 0%
+    #####:   81:void SectionSelection(struct Catalog* Shop, struct Garbage* UserGarbage, struct List* Customers)
+    $$$$$:   81-block  0
+        -:   82:{
+        -:   83:    char choise[15];
+        -:   84:
+        -:   85:
+        -:   86:
+    #####:   87:    printf("                                                                         Hint: If you want to go out press 'b'\n");
+    $$$$$:   87-block  0
+call    0 never executed
+        -:   88:
+    #####:   89:    printf("1.Decorative cosmetics\n");
+call    0 never executed
+    #####:   90:    printf("2.Care cosmetics\n");
+call    0 never executed
+    #####:   91:    CheckYourChoise(choise, '1', '2');
+call    0 never executed
+        -:   92:
+    #####:   93:    system("cls");
+call    0 never executed
+        -:   94:
+    #####:   95:    if(choise[0] == '1')
+branch  0 never executed
+branch  1 never executed
+        -:   96:    {
+    #####:   97:        OutputProducts(Shop, 'd');
+    $$$$$:   97-block  0
+call    0 never executed
+unconditional  1 never executed
+    #####:   98:    } else if(choise[0] == '2')
+    $$$$$:   98-block  0
+branch  0 never executed
+branch  1 never executed
+        -:   99:    {
+    #####:  100:        OutputProducts(Shop, 'c');
+    $$$$$:  100-block  0
+call    0 never executed
+unconditional  1 never executed
+        -:  101:    } else
+        -:  102:    {
+    #####:  103:        UserInterface(Shop, UserGarbage, Customers);
+    $$$$$:  103-block  0
+call    0 never executed
+unconditional  1 never executed
+        -:  104:    }
+    #####:  105:}
+        -:  106:
+function Search called 0 returned 0% blocks executed 0%
+    #####:  107:void Search(struct Catalog* Shop, struct Garbage* UserGarbage, struct List* Customers)
+    $$$$$:  107-block  0
+        -:  108:{
+        -:  109:    char choise[15];
+        -:  110:    char search[15];
+        -:  111:
+    #####:  112:    printf("                                                            If you want to go back press 'b'\n");
+    $$$$$:  112-block  0
+call    0 never executed
+        -:  113:
+    #####:  114:    printf("Want to search for a product by name or description? n/d\n");
+call    0 never executed
+    #####:  115:    CheckYourChoise(choise, 'n', 'd');
+call    0 never executed
+        -:  116:
+    #####:  117:    system("cls");
+call    0 never executed
+        -:  118:
+    #####:  119:    if(choise[0] == 'n')
+branch  0 never executed
+branch  1 never executed
+        -:  120:    {
+    #####:  121:        printf("                                                            If you want to go back press 'b'\n");
+    $$$$$:  121-block  0
+call    0 never executed
+        -:  122:
+    #####:  123:        printf("Enter name:\n");
+call    0 never executed
+    #####:  124:        scanf("%s", search);
+call    0 never executed
+        -:  125:
+    #####:  126:        system("cls");
+call    0 never executed
+        -:  127:
+    #####:  128:        if(search[0] == 'b')
+branch  0 never executed
+branch  1 never executed
+        -:  129:        {
+    #####:  130:            return Search(Shop, UserGarbage, Customers);
+    $$$$$:  130-block  0
+call    0 never executed
+unconditional  1 never executed
+    $$$$$:  130-block  1
+unconditional  2 never executed
+        -:  131:        } 
+        -:  132:
+    #####:  133:        SearchName(Shop, search);
+    $$$$$:  133-block  0
+call    0 never executed
+unconditional  1 never executed
+    #####:  134:    } else if(choise[0] == 'd')
+    $$$$$:  134-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  135:    {
+    #####:  136:        printf("                                                            If you want to go back press 'b'\n");
+    $$$$$:  136-block  0
+call    0 never executed
+        -:  137:
+    #####:  138:        printf("Enter description:\n");
+call    0 never executed
+    #####:  139:        scanf("%s", search);
+call    0 never executed
+        -:  140:
+    #####:  141:        if(search[0] == 'b')
+branch  0 never executed
+branch  1 never executed
+        -:  142:        {
+    #####:  143:            system("cls");
+    $$$$$:  143-block  0
+call    0 never executed
+    #####:  144:            return Search(Shop, UserGarbage, Customers);
+call    0 never executed
+unconditional  1 never executed
+        -:  145:        }
+    #####:  146:        SearchDescription(Shop, search);
+    $$$$$:  146-block  0
+call    0 never executed
+unconditional  1 never executed
+        -:  147:    } else
+        -:  148:    {
+    #####:  149:        return UserInterface(Shop, UserGarbage, Customers);
+    $$$$$:  149-block  0
+call    0 never executed
+unconditional  1 never executed
+    $$$$$:  149-block  1
+unconditional  2 never executed
+        -:  150:    }
+        -:  151:}
+        -:  152:
+function InGarbage called 0 returned 0% blocks executed 0%
+    #####:  153:void InGarbage(struct Catalog* Shop, struct Garbage* UserGarbage, struct List* Customers)
+    $$$$$:  153-block  0
+        -:  154:{
+    #####:  155:    struct Product* temp = Shop->head;
+        -:  156:    char name[15];
+    #####:  157:    int amount = 0;
+        -:  158:
+    #####:  159:    printf("                                                            If you want to go back press 'b'\n");
+    $$$$$:  159-block  0
+call    0 never executed
+        -:  160:
+    #####:  161:    printf("What do you want to buy? Enter name:\n");
+call    0 never executed
+    #####:  162:    scanf("%s", name);
+call    0 never executed
+        -:  163:
+    #####:  164:    if(name[0] == 'b')
+branch  0 never executed
+branch  1 never executed
+        -:  165:    {
+    #####:  166:        system("cls");
+    $$$$$:  166-block  0
+call    0 never executed
+    #####:  167:        UserInterface(Shop, UserGarbage, Customers);
+call    0 never executed
+unconditional  1 never executed
+        -:  168:    } else
+        -:  169:    {
+    #####:  170:        while(temp)
+    $$$$$:  170-block  0
+unconditional  0 never executed
+    $$$$$:  170-block  1
+branch  1 never executed
+branch  2 never executed
+        -:  171:        {
+    #####:  172:            if(temp->name[0] == name[0] && temp->name[1] == name[1] && temp->name[2] == name[2])
+    $$$$$:  172-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  172-block  1
+branch  2 never executed
+branch  3 never executed
+    $$$$$:  172-block  2
+branch  4 never executed
+branch  5 never executed
+        -:  173:            {
+    #####:  174:                if(temp->presence == 'n')
+    $$$$$:  174-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  175:                {
+    #####:  176:                    printf("Product is out of stock\n");
+    $$$$$:  176-block  0
+call    0 never executed
+    #####:  177:                    return InGarbage(Shop, UserGarbage, Customers);
+call    0 never executed
+unconditional  1 never executed
+    $$$$$:  177-block  0
+unconditional  2 never executed
+        -:  178:                }
+    #####:  179:                AddToGarbage(UserGarbage, temp);
+    $$$$$:  179-block  0
+call    0 never executed
+    #####:  180:                amount++;
+unconditional  0 never executed
+        -:  181:            }
+    #####:  182:            temp = temp->next;
+    $$$$$:  182-block  0
+unconditional  0 never executed
+        -:  183:        }
+        -:  184:    }
+        -:  185:
+    #####:  186:    if(amount == 0)
+    $$$$$:  186-block  0
+branch  0 never executed
+branch  1 never executed
+        -:  187:    {
+    #####:  188:        printf("                                     Nothing found\n");
+    $$$$$:  188-block  0
+call    0 never executed
+        -:  189:
+    #####:  190:        return InGarbage(Shop, UserGarbage, Customers);
+call    0 never executed
+unconditional  1 never executed
+        -:  191:    }
+        -:  192:
+    #####:  193:    printf("Product added to cart\nDo you want go to cart? y/n\n");
+    $$$$$:  193-block  0
+call    0 never executed
+    #####:  194:    CheckYourChoise(name, 'y', 'n');
+call    0 never executed
+        -:  195:
+    #####:  196:    system("cls");
+call    0 never executed
+        -:  197:
+    #####:  198:    if(name[0] == 'y')
+branch  0 never executed
+branch  1 never executed
+        -:  199:    {
+    #####:  200:        Garbage(Shop, UserGarbage, Customers);
+    $$$$$:  200-block  0
+call    0 never executed
+unconditional  1 never executed
+        -:  201:    } else
+        -:  202:    {
+    #####:  203:        UserInterface(Shop, UserGarbage, Customers);
+    $$$$$:  203-block  0
+call    0 never executed
+unconditional  1 never executed
+    $$$$$:  203-block  1
+unconditional  2 never executed
+        -:  204:    }
+        -:  205:}
+        -:  206:
+function Garbage called 0 returned 0% blocks executed 0%
+    #####:  207:void Garbage(struct Catalog* Shop, struct Garbage* UserGarbage, struct List* Customers)
+    $$$$$:  207-block  0
+        -:  208:{
+    #####:  209:    struct Product* temp = UserGarbage->head;
+        -:  210:    char choise[15];
+        -:  211:
+    #####:  212:    printf("                                                            If you want to go back press 'b'\n");
+    $$$$$:  212-block  0
+call    0 never executed
+        -:  213:
+    #####:  214:    printf("Your orders:\n");
+call    0 never executed
+    #####:  215:    while(temp)
+unconditional  0 never executed
+    $$$$$:  215-block  0
+branch  1 never executed
+branch  2 never executed
+        -:  216:    {
+    #####:  217:        OutputProduct(temp);
+    $$$$$:  217-block  0
+call    0 never executed
+        -:  218:
+    #####:  219:        temp = temp->next;
+        -:  220:
+    #####:  221:        printf("\n\n");
+call    0 never executed
+unconditional  1 never executed
+        -:  222:    }
+    #####:  223:    printf("                           The number of your orders: %d\n", UserGarbage->amount);
+    $$$$$:  223-block  0
+call    0 never executed
+    #####:  224:    printf("                           Total amount of money: %d\n", UserGarbage->sum);
+call    0 never executed
+        -:  225:
+    #####:  226:    printf("Want to place an order? y/n\n");
+call    0 never executed
+    #####:  227:    CheckYourChoise(choise, 'y', 'n');
+call    0 never executed
+        -:  228:
+    #####:  229:    system("cls");
+call    0 never executed
+        -:  230:
+    #####:  231:    if(choise[0] == 'y')
+branch  0 never executed
+branch  1 never executed
+        -:  232:    {
+    #####:  233:        Checkout(UserGarbage, Customers, Shop);
+    $$$$$:  233-block  0
+call    0 never executed
+unconditional  1 never executed
+        -:  234:    } else
+        -:  235:    {
+    #####:  236:        UserInterface(Shop, UserGarbage, Customers);
+    $$$$$:  236-block  0
+call    0 never executed
+unconditional  1 never executed
+        -:  237:    }
+        -:  238:
+    #####:  239:}
+        -:  240:
+function Checkout called 0 returned 0% blocks executed 0%
+    #####:  241:void Checkout(struct Garbage* UserGarbage, struct List* Customers, struct Catalog* Shop)
+    $$$$$:  241-block  0
+        -:  242:{
+        -:  243:    char name[15];
+        -:  244:    char surname[15];
+        -:  245:    char a;
+        -:  246:
+    #####:  247:    printf("Enter your name: ");
+    $$$$$:  247-block  0
+call    0 never executed
+    #####:  248:    scanf("%15s", name);
+call    0 never executed
+        -:  249:
+    #####:  250:    printf("Enter your surname: ");
+call    0 never executed
+    #####:  251:    scanf("%15s", surname);
+call    0 never executed
+        -:  252:
+    #####:  253:    AddCustomer(Customers, UserGarbage, name, surname);
+call    0 never executed
+        -:  254:
+    #####:  255:    printf("Order is processed. Press any key");
+call    0 never executed
+    #####:  256:    scanf(" %c", &a);
+call    0 never executed
+        -:  257:
+    #####:  258:    DeleteGarbage(UserGarbage);
+call    0 never executed
+        -:  259:
+    #####:  260:    system("cls");
+call    0 never executed
+        -:  261:
+    #####:  262:    UserInterface(Shop, UserGarbage, Customers);
+call    0 never executed
+    #####:  263:}
+        -:  264:
+function ToSeeReport called 0 returned 0% blocks executed 0%
+    #####:  265:void ToSeeReport(struct Catalog* Shop, struct Garbage* UserGarbage, struct List* Customers)
+    $$$$$:  265-block  0
+        -:  266:{
+        -:  267:    char password[10];
+    #####:  268:    int check = 0;
+        -:  269:    char a;
+    #####:  270:    printf("Enter password:\n");
+    $$$$$:  270-block  0
+call    0 never executed
+        -:  271:    
+    #####:  272:    scanf("%s", password);
+call    0 never executed
+        -:  273:
+    #####:  274:    while(check == 0)
+unconditional  0 never executed
+    $$$$$:  274-block  0
+branch  1 never executed
+branch  2 never executed
+        -:  275:    {
+    #####:  276:        check = 1;
+    #####:  277:        if(password[0] != 'l' || password[1] != 'a' || password[2] != 'b')
+    $$$$$:  277-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  277-block  1
+branch  2 never executed
+branch  3 never executed
+    $$$$$:  277-block  2
+branch  4 never executed
+branch  5 never executed
+        -:  278:        {
+    #####:  279:            printf("Access error. Enter password:\n");
+    $$$$$:  279-block  0
+call    0 never executed
+    #####:  280:            scanf(" %s", password);
+call    0 never executed
+    #####:  281:            check = 0;
+unconditional  0 never executed
+    #####:  282:        } else if(password[0] == 'b' && password[1] == '\n')
+    $$$$$:  282-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  282-block  1
+branch  2 never executed
+branch  3 never executed
+        -:  283:        {
+    #####:  284:            UserInterface(Shop, UserGarbage, Customers);
+    $$$$$:  284-block  0
+call    0 never executed
+unconditional  1 never executed
+        -:  285:        }
+        -:  286:    }
+        -:  287:
+    #####:  288:    system("cls");
+    $$$$$:  288-block  0
+call    0 never executed
+        -:  289:
+    #####:  290:    OutputReport(Customers);
+call    0 never executed
+        -:  291:
+    #####:  292:    printf("                                          Press any key\n");
+call    0 never executed
+        -:  293:
+    #####:  294:    scanf(" %c", &a);
+call    0 never executed
+        -:  295:
+    #####:  296:    system("cls");
+call    0 never executed
+        -:  297:
+    #####:  298:    UserInterface(Shop, UserGarbage, Customers);
+call    0 never executed
+    #####:  299:}
